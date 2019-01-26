@@ -77,6 +77,7 @@ object ScalafmtPlugin extends AutoPlugin {
       onFormat: (File, Input, Output) => T
   ): Seq[Option[T]] = {
     sources
+      .par
       .map { file =>
         val input = IO.read(file)
         val output =
@@ -97,7 +98,7 @@ object ScalafmtPlugin extends AutoPlugin {
           case Formatted.Success(code) =>
         }
         */
-      }
+      }.seq
   }
 
   private def formatSources(
